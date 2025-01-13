@@ -1,5 +1,5 @@
 <template>
-    <div class="tictac">
+    <div class="tictac" v-show="loaded">
         <div class="tictac__body">
 
             <div class="tictac__body--top">
@@ -18,10 +18,13 @@
             <!-- <img src="@/assets/img/mic.svg" class="mic" alt="Микрофон"> -->
 
             <div class="tictac__body--bottom">
+                <div class="tictac__body--bottom--text">
+                    <span>До старта акции осталось:</span>
+                </div>
 
-                <Timer date_to="01.01.2025" />
+                <Timer date_to="01.03.2025" />
 
-                <span>Перематываем треки, осталось:</span>
+
             </div>
             <div class="rectangle"></div>
         </div>
@@ -32,9 +35,13 @@
 export default {
     data() {
         return {
-
+            loaded: false,
         }
-    }
+    },
+    async mounted() {
+        await nextTick();
+        this.loaded = true
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -57,17 +64,17 @@ export default {
     @media (max-width: 1024px) {
         background-image: url('@/assets/img/bgpage_tablet.png');
         background-position: unset;
-        background-size: 100% 100%;
+        // background-size: 100% 100%;
     }
 
     @media (max-width: 768px) {
         background-image: url('@/assets/img/bgpage_tablet_vert.png');
-        background-size: cover;
+        // background-size: cover;
     }
 
     @media (max-width: 450px) {
         background-image: url('@/assets/img/bgpage_mob.png');
-        background-size: 100vw 100vh;
+        background-position: center;
     }
 
     &__body {
@@ -114,23 +121,42 @@ export default {
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            gap: 10px;
+            gap: 35px;
             width: 100%;
             z-index: 5;
 
-            span {
-                font-weight: 400;
-                font-size: 22px;
-                text-align: center;
-                color: #fff;
-                font-family: var(--loos);
+            &--text {
+                span {
+                    font-weight: 400;
+                    font-size: 22px;
+                    text-align: center;
+                    color: #046638;
+                    font-family: var(--loos);
+
+                    @media (max-width: 1024px) {
+                        font-size: 19px;
+                    }
+
+                    @media (max-width: 700px) {
+                        font-size: 14px;
+                    }
+                }
+
+                border-radius: 100px;
+                background: #fff;
+                padding: 4px 21px;
 
                 @media (max-width: 1024px) {
-                    font-size: 19px;
+                    padding: 4px 12px;
+
+                }
+
+                @media (max-width: 768px) {
+                    padding: 4px 18px;
                 }
 
                 @media (max-width: 700px) {
-                    font-size: 14px;
+                    padding: 3px 19px;
                 }
             }
         }
@@ -189,6 +215,7 @@ export default {
                     border-radius: 64px;
                     border: 3px solid #11FB89;
                     padding: 5px 8px 0px 8px;
+                    display: inline-block;
                     line-height: 100%;
                     font-family: var(--loos);
                 }
